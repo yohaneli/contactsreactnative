@@ -1,20 +1,20 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import { View, FlatList, Text } from 'react-native';
 import { styles } from './style';
 import ContactItem from './contactItem';
 import { useSelector } from 'react-redux';
+import { FirebaseContext } from '../../FirebaseContext';
 
   const Liste = () => {
     
-    const {contacts} = useSelector(state => state);
-
-    console.log("contacts",contacts);
+    const {contacts} = useSelector(state => state);    
 
     return (
         <FlatList
           data={contacts}
-          renderItem={ContactItem}
+          renderItem={({item}) => <ContactItem item={item} />}
           keyExtractor={item => item.id}
+          ListEmptyComponent={() => <Text>Vous n'avez aucun contact pour le moment</Text>}
         />
     );
   }

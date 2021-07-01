@@ -1,18 +1,18 @@
 import React,{useState,useContext} from 'react';
-import { View, Text,StyleSheet } from 'react-native';
+import { View, Text,StyleSheet,Keyboard } from 'react-native';
 import { Button, Overlay,Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useSelector,useDispatch } from 'react-redux';
 import { afficheModal } from '../../Redux/Actions/modal';
 import { ajouterContact } from '../../Redux/Actions/contacts';
-import {FirebaseContext} from '../../FirebaseContext';
+import Firebase, {FirebaseContext} from '../../FirebaseContext';
 
 
 const index = () => {
 
-    const {queryAddContacts} = useContext(FirebaseContext);
+    const {queryAddContact} = useContext(FirebaseContext);
 
-    console.log(queryAddContacts);
+    //console.log(queryAddContact);
 
     const [name, setName] = useState("")
 
@@ -26,14 +26,13 @@ const index = () => {
     }
 
     const saveName = () => {
-        dispatch(ajouterContact(
-            {
-                id:contacts.length + 1,
+        queryAddContact(
+              {
                 name,
                 avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
                 subtitle: 'nc'
               }
-        ))
+        );
         console.log("name",name);
         //queryAddContacts({name:name});
         toggleOverlay();
@@ -43,6 +42,7 @@ const index = () => {
 
     const toggleOverlay = () => {
         //setVisible(modal.visible);
+        
         dispatch(afficheModal({visible:!modal.visible}));
         setName("");
       };
