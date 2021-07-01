@@ -1,42 +1,72 @@
-import React,{useContext} from 'react';
-import { FirebaseContext } from '../../FirebaseContext';
+import React,{useState,useContext} from 'react';
 import { View, Text } from 'react-native';
-import { Button } from 'react-native-elements';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { Button,Input } from 'react-native-elements';
+import { Icon } from 'react-native-vector-icons/Icon';
+import {FirebaseContext} from '../../FirebaseContext';
 
-GoogleSignin.configure({
-    webClientId: '759317585541-jih5ou5mpgr22f8qu73v42so016ig1jr.apps.googleusercontent.com',
-  });
-
-const index = () => {
+const index = ({navigation}) => {
 
     const {auth} = useContext(FirebaseContext);
 
-    const goToHome = async () => {
+    const [email, setEmail] = useState("");
 
-        // Get the users ID token
+    const [password, setPassword] = useState("");
 
-        const { idToken } = await GoogleSignin.signIn();
+    const connexion = () => {
 
-        console.log(idToken);
+        try {
 
-        // Create a Google credential with the token
+            console.log(email,password);
 
-        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+            auth.signInWithEmailAndPassword(email,password);
 
-        // Sign-in the user with the credential
+        } catch (error) {
 
-        return auth.signInWithCredential(googleCredential);
+            console.log(error);
 
-        //navigation.navigate("Home");
+        }
+
     }
+
+    const deconnexion = () => {
+
+        auth.signOut();
+        
+    }
+    
+    
     
     return (
         <View>
-            <Button
-            title="Login with Google"
-            onPress={goToHome}
+            <Input
+            placeholder="Email"
+            onChangeText={setEmail}
+            value={email}
             />
+
+            <Input
+            placeholder="Mot de passe"
+            secureTextEntry={true}
+            onChangeText={setPassword}
+            value={password}
+            />
+
+            <Button 
+            title="Connexion"
+            onPress={connexion}
+            />
+
+            <Button 
+            title="Inscription"
+            onPress={() => navigation.navigate('Register')}
+            style={{marginTop:100}}
+            />
+
+            <Button 
+            title="Déconnexion"
+            onPress={deconnexion}
+            />
+
         </View>
     )
 }

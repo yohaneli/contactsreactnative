@@ -6,7 +6,7 @@ import { FirebaseContext } from '../../FirebaseContext';
 import { gererFavori } from '../../Redux/Actions/favori';
 import { launchCamera } from 'react-native-image-picker';
 
-const ContactItem = ({item}) => {
+const ContactItem = ({navigation,item}) => {
 
     const {queryDeleteContact,queryUpdateContact,queryAddImage,queryGetImageUrl} = useContext(FirebaseContext);
 

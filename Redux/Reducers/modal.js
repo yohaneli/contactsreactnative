@@ -1,6 +1,6 @@
 import { AFF_MODAL } from "../Actions/types";
 
-const initStateModal = {visible:true};
+const initStateModal = {visible:false};
 
 const modal = (state = initStateModal,action) => {
 

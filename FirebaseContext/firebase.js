@@ -13,11 +13,25 @@ class Firebase {
 
     // all queries
 
-    queryContact = () => this.db.collection("contacts");
+    //list users
+
+    queryUsers = () => firestore.collection("users")
+
+    //add un user
+
+    queryAddUser = (id,data) => firestore.collection("users").doc(id).set(data);
+
+    //update user
+
+    queryUpdateUser = (id,data) => firestore.collection("users").doc(id).update(data);
 
     // liste des contacts
 
     queryAllContacts = () => this.queryContact().orderBy("name","asc");
+
+    // select un contact
+    
+    queryContact = () => this.db.collection("contacts");
 
     //ajouter un contact
 
